@@ -8,33 +8,30 @@ app.use(express.json());
 
 app.post("/download", async (req, res) => {
   const { url } = req.body;
-  if (!url) return res.json({ error: "No URL provided" });
+  if (!url) return res.json({ error: "Instagram URL required" });
 
   try {
     const apiUrl =
-      "https://instagram-downloader-scraper-reels-igtv-posts-stories.p.rapidapi.com/v1/instagram?url=" +
+      "https://instagram-downloader-scraper-reels-igtv-posts-stories.p.rapidapi.com/instagram/?url=" +
       encodeURIComponent(url);
 
-    const r = await fetch(apiUrl, {
+    const response = await fetch(apiUrl, {
+      method: "GET",
       headers: {
         "X-RapidAPI-Key": process.env.RAPID_KEY,
         "X-RapidAPI-Host":
-          "instagram-downloader-scraper-reels-igtv-posts-stories.p.rapidapi.com",
-      },
+          "instagram-downloader-scraper-reels-igtv-posts-stories.p.rapidapi.com"
+      }
     });
 
-    const data = await r.json();
-    const video =
-      data.download_url || (data.result && data.result[0]?.url);
-
-    if (!video) return res.json({ error: "Video not found" });
-
-    res.json({ success: true, video });
+    const data = await response.json();
+    res.json(data);
   } catch (err) {
-    res.json({ error: "Server error" });
+    res.status(500).json({ error: "Download failed" });
   }
 });
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
 });
