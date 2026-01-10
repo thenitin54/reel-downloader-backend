@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>YouTube Video Downloader</title>
+
+<meta name="description" content="Download YouTube videos in HD. Fast, Free, No Login." />
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Segoe UI,Arial,sans-serif;
+  background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+  color:#fff;
+}
+
+/* HEADER */
+header{
+  text-align:center;
+  padding:26px 12px;
+}
+header h1{
+  margin:0;
+  font-size:28px;
+  letter-spacing:.5px;
+}
+header p{
+  margin-top:6px;
+  opacity:.85;
+}
+
+/* MAIN CARD */
+.container{
+  max-width:420px;
+  margin:10px auto 90px;
+  background:#0f0f0f;
+  padding:22px;
+  border-radius:18px;
+  box-shadow:0 15px 40px rgba(0,0,0,.6);
+}
+
+input,select{
+  width:100%;
+  padding:14px;
+  margin-top:12px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+  font-size:15px;
+}
+
+button{
+  width:100%;
+  padding:16px;
+  margin-top:16px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(45deg,#ff0033,#ff7a18);
+  color:#fff;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+#result{
+  margin-top:14px;
+  text-align:center;
+  font-size:14px;
+}
+
+.processing{
+  display:none;
+  margin-top:16px;
+  padding:18px;
+  background:#000;
+  border-radius:14px;
+  text-align:center;
+}
+
+.glow{
+  font-size:20px;
+  font-weight:bold;
+  color:#fff;
+  text-shadow:
+    0 0 10px #ff0033,
+    0 0 25px #ff0033,
+    0 0 45px #ff7a18;
+  animation:pulse 2s infinite alternate;
+}
+
+@keyframes pulse{
+  from{opacity:.7}
+  to{opacity:1}
+}
+
+.preview{
+  display:none;
+  margin-top:18px;
+}
+.preview video{
+  width:100%;
+  border-radius:14px;
+}
+.download-link{
+  display:block;
+  margin-top:12px;
+  padding:12px;
+  background:#25D366;
+  color:#fff;
+  border-radius:12px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+/* INFO SECTIONS */
+section{
+  margin-top:26px;
+}
+section h2{
+  margin-bottom:8px;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  font-size:12px;
+  opacity:.7;
+  margin:30px 0 20px;
+}
+
+/* SOCIAL BAR */
+.follow{
+  text-align:center;
+  margin-top:20px;
+  font-size:14px;
+  opacity:.85;
+}
+
+.social{
+  margin-top:12px;
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.social a{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#000;
+}
+.social img{
+  width:26px;
+  height:26px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>YouTube Video Downloader</h1>
+  <p>Fast • Free • No Login • HD</p>
+</header>
+
+<div class="container">
+
+  <input id="url" placeholder="Paste YouTube video link here">
+
+  <select id="quality">
+    <option value="auto">Auto Quality</option>
+    <option value="720">720p HD</option>
+    <option value="1080">1080p Full HD</option>
+  </select>
+
+  <button onclick="download()">Download</button>
+
+  <div id="processing" class="processing">
+    <div class="glow">Processing…</div>
+  </div>
+
+  <div id="result"></div>
+
+  <div id="preview" class="preview">
+    <video id="video" controls></video>
+    <a id="downloadBtn" class="download-link" download>⬇ Download Video</a>
+  </div>
+
+  <section>
+    <h2>About</h2>
+    <p>
+      This tool helps you download YouTube videos quickly for personal or
+      copyright-free use.
+    </p>
+  </section>
+
+  <section>
+    <h2>Privacy Policy</h2>
+    <p>
+      We do not host any media. All content is fetched from public sources.
+    </p>
+  </section>
+
+</div>
+
+<footer>
+  We do not host any media. Public / own content only.
+</footer>
+
+<div class="follow">Follow me on</div>
+
+<div class="social">
+  <a href="https://www.youtube.com/@thenitin93" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+  </a>
+  <a href="https://www.instagram.com/the_nitin_54" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+  </a>
+  <a href="https://t.me/the_nitin_54" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
+  </a>
+  <a href="https://pinterest.com/kushwanshinitin" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733646.png">
+  </a>
+  <a href="https://x.com/the_nitin_54" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/5968/5968958.png">
+  </a>
+  <a href="https://linkedin.com" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png">
+  </a>
+  <a href="https://nitinnetcom.wordpress.com" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/841/841364.png">
+  </a>
+</div>
+
+<script>
+const BACKEND_URL = "https://ig-downloader-api-production.up.railway.app/download";
+
+async function download(){
+  const u = url.value.trim();
+  if(!u){
+    result.innerHTML="❌ Paste YouTube link first";
+    return;
+  }
+
+  result.innerHTML="";
+  preview.style.display="none";
+  processing.style.display="block";
+
+  try{
+    const res = await fetch(BACKEND_URL,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({ url: u })
+    });
+
+    const data = await res.json();
+    processing.style.display="none";
+
+    const media = data.video || data.url;
+    if(!media){
+      result.innerHTML="❌ Video not available";
+      return;
+    }
+
+    preview.style.display="block";
+    video.src = media;
+    downloadBtn.href = media;
+    result.innerHTML="✅ Ready to download";
+
+  }catch(e){
+    processing.style.display="none";
+    result.innerHTML="❌ Server error";
+  }
+}
+</script>
+
+</body>
+</html>
